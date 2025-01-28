@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新營國小六年丙班</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        h1 {
+            color: #4CAF50;
+            text-align: center;
+        }
+        .content {
+            margin-top: 20px;
+        }
+        .section-title {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            font-size: 24px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .student-list button {
+            margin: 5px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+        }
+        .student-list button:hover {
+            background-color: #45a049;
+        }
+        .student-info {
+            display: none;
+            margin-top: 10px;
+        }
+        .student-info.active {
+            display: block;
+        }
+        .feedback-box {
+            margin-top: 20px;
+        }
+        .feedback-list {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f4f4f4;
+        }
+        .feedback-list div {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>新營國小六年丙班</h1>
+
+    <!-- 進入網頁時的密碼驗證區 -->
+    <div id="password-section">
+        <h2>輸入班級代碼 如:101、201、301:</h2>
+        <input type="password" id="access-code" placeholder="輸入代碼">
+        <button onclick="validatePassword()">進入</button>
+    </div>
+
+    <!-- 正常頁面內容 -->
+    <div id="page-content" style="display:none;">
+        <div class="content">
+            <!-- 班級成員介紹區域 -->
+            <div class="section-title" onclick="toggleSection('student-section')">
+                班級成員介紹(目前無法對話)
+            </div>
+            <div id="student-section" class="student-list">
+                <button onclick="showStudentInfo(1)">座號 1 - 林書丞</button>
+                <button onclick="showStudentInfo(2)">座號 2 - 薛庭宇</button>
+                <button onclick="showStudentInfo(3)">座號 3 - 汪家閱</button>
+                <button onclick="showStudentInfo(4)">座號 4 - 黃苙彥</button>
+                <button onclick="showStudentInfo(5)">座號 5 - 黃祺騰</button>
+                <button onclick="showStudentInfo(6)">座號 6 - 顏瑞信</button>
+                <button onclick="showStudentInfo(7)">座號 7 - 郭恩亮</button>
+                <button onclick="showStudentInfo(8)">座號 8 - 黃宸宥</button>
+                <button onclick="showStudentInfo(9)">座號 9 - 鄭向邑</button>
+                <button onclick="showStudentInfo(10)">座號 10 - 林子益</button>
+                <button onclick="showStudentInfo(11)">座號 11 - 沈彥均</button>
+                <button onclick="showStudentInfo(12)">那群女生們</button>
+            </div>
+
+            <!-- 新增獨家報導區 -->
+            <!-- 獨家報導區 -->
+<div class="section-title" onclick="toggleExclusiveReport()">
+    獨家報導
+</div>
+<div id="exclusive-report" class="student-list" style="display:none;">
+    <p>獨家新聞如下</p>
+    <button id="exclusive-button" style="display:none;" onclick="exposeAccount()">廖**帳密曝光!</button>
+</div>
+
+<script>
+    // 顯示或隱藏"獨家報導"區塊
+    function toggleExclusiveReport() {
+        const reportSection = document.getElementById('exclusive-report');
+        reportSection.style.display = reportSection.style.display === 'none' ? 'block' : 'none';
+        
+        // 顯示"廖**帳密曝光!"按鈕
+        if (reportSection.style.display === 'block') {
+            document.getElementById('exclusive-button').style.display = 'block';
+        } else {
+            document.getElementById('exclusive-button').style.display = 'none';
+        }
+    }
+
+    // 按鈕點擊事件，開啟新分頁顯示內容
+    function exposeAccount() {
+        // 開啟新分頁並寫入內容
+        const newWindow = window.open();
+        newWindow.document.write("<h1>根據丁班某同學指出 廖**的帳號為lau6872 密碼為@lau6872 請看到這則報導的人謹記 盜用他人帳號屬於違法行為</h1>");
+        newWindow.document.close();  // 關閉文檔流
+    }
+</script>
+
+
+            <!-- 其他區塊 -->
+            <div class="section-title" onclick="toggleSection('other-sections')">
+                關於別的班級
+            </div>
+            <div id="other-sections" class="student-list" style="display:none;">
+                <p>目前尚待更新</p>
+            </div>
+
+            <div class="section-title" onclick="toggleSection('homework-section')">
+                今日功課
+            </div>
+            <div id="homework-section" class="student-list" style="display:none;">
+                <p>1.作文-報恩父母計畫 2.作文-畢業感言 3.因材網 4.母語互動學習單</p>
+            </div>
+
+            <div class="section-title" onclick="toggleSection('chat-section')">
+                聊天室(目前尚未編寫完成)
+            </div>
+            <div id="chat-section" class="student-list" style="display:none;">
+                <button onclick="openChat()">進入聊天室</button>
+            </div>
+
+            <div class="section-title" onclick="toggleSection('other-section')">
+                其他
+            </div>
+            <div id="other-section" class="student-list" style="display:none;">
+                <p>目前尚待更新</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 學生資料區域 -->
+    <div id="student-1" class="student-info">
+        <h2>座號 1 - 林書丞</h2>
+        <p>製作者的敘述: 林書丞這位同學待人非常的熱情又有禮貌(反)，上課時很專心的"看書"，是我們全班都仰慕的對象（吧？）</p>
+        <div class="feedback-box">
+            <h3>你想對他說的話：</h3>
+            <textarea id="feedback-1" rows="4" cols="50" placeholder="請留下你想對林書丞說的話..."></textarea><br>
+            <button onclick="submitFeedback(1)">提交</button>
+        </div>
+        <div class="feedback-list" id="feedback-list-1"></div>
+        <button onclick="viewFeedback(1)">查看別人對林書丞的意見</button>
+    </div>
+
+        <div id="student-2" class="student-info">
+            <h2>座號 2 - 薛庭宇</h2>
+            <p>製作者的敘述: 薛庭宇這人沒什麼好說的 就是成績起起伏伏 學習不認真 講坦白點就是妥妥的學渣 可是他也是為班上付出很多(應該吧 希望我刷謊鼻子不會變長) 例如:呃......認真說我還真想不出例子來 但是 有幾點我很認同 他是班上的開心果(雖然把老師氣到肚子痛去看醫生) 而且體育也不錯(跑100m被28嗆、樂樂棒球被三振、大隊接力時腳抬的比腰高.......) 喜歡竹蘭 希望他本人看到後是心平氣和的</p>
+            <div class="feedback-box">
+                <h3>你想對他說的話：</h3>
+                <textarea id="feedback-2" rows="4" cols="50" placeholder="請留下你想對薛庭宇說的話..."></textarea><br>
+                <button onclick="submitFeedback(2)">提交</button>
+            </div>
+            <div class="feedback-list" id="feedback-list-2"></div>
+            <button onclick="viewFeedback(2)">查看別人對薛庭宇的意見</button>
+        </div>
+
+        <div id="student-3" class="student-info">
+            <h2>座號 3 - 汪家閱</h2>
+            <p>製作者的敘述: 智商181 注音講話大師 顏值比珠穆朗瑪峰的高度還高 體育不行專攻數學 目標是成為寶可夢大師(?) 是個走在路上都能把電線桿亮到倒下來的人 不要愛上他 因為他是***的(?) 仰慕他的人都從六年丙班的2號頭上排到2號的頭上了(這樣是不是代表沒有人仰慕他)</p>
+            <div class="feedback-box">
+                <h3>你想對他說的話：</h3>
+                <textarea id="feedback-3" rows="4" cols="50" placeholder="請留下你想對汪家閱說的話..."></textarea><br>
+                <button onclick="submitFeedback(3)">提交</button>
+            </div>
+            <div class="feedback-list" id="feedback-list-3"></div>
+            <button onclick="viewFeedback(3)">查看別人對汪家閱的意見</button>
+        </div>
+
+        <div id="student-4" class="student-info">
+            <h2>座號 4 - 黃苙彥</h2>
+            <p>製作者的敘述: 是被耍的團團轉的冤種小丑 與2、28結盟三大天王 成績還行 體育很強 比2號好多了(對不起了2) 很倔強 自認沒脫口罩很帥</p>
+            <div class="feedback-box">
+                <h3>你想對他說的話：</h3>
+                <textarea id="feedback-4" rows="4" cols="50" placeholder="請留下你想對黃苙彥說的話..."></textarea><br>
+                <button onclick="submitFeedback(4)">提交</button>
+            </div>
+            <div class="feedback-list" id="feedback-list-4"></div>
+            <button onclick="viewFeedback(4)">查看別人對黃苙彥的意見</button>
+        </div>
+
+        <div id="student-5" class="student-info">
+            <h2>座號 5 - 黃祺騰</h2>
+            <p>製作者的敘述: 他對班上的貢獻是真的多 我實在找不到要怎麼形容了......</p>
+            <div class="feedback-box">
+                <h3>你想對他說的話：</h3>
+                <textarea id="feedback-5" rows="4" cols="50" placeholder="請留下你想對黃祺騰說的話..."></textarea><br>
+                <button onclick="submitFeedback(5)">提交</button>
+            </div>
+            <div class="feedback-list" id="feedback-list-5"></div>
+            <button onclick="viewFeedback(5)">查看別人對黃祺騰的意見</button>
+        </div>
+
+        <div id="student-6" class="student-info">
+            <h2>座號 6 - 顏瑞信</h2>
+            <p>製作者的敘述: 他的皮膚黑黑的 不知道是不是被烤過?(是) 體育很強十項全能 成績還可以再進步 是全班的模範 雖然有一點調皮 但是是很多女性欣賞的對象</p>
+            <div class="feedback-box">
+                <h3>你想對他說的話：</h3>
+                <textarea id="feedback-6" rows="4" cols="50" placeholder="請留下你想對顏瑞信說的話..."></textarea><br>
+                <button onclick="submitFeedback(6)">提交</button>
+            </div>
+            <div class="feedback-list" id="feedback-list-6"></div>
+            <button onclick="viewFeedback(6)">查看別人對顏瑞信的意見</button>
+        </div>
+
+        <div id="student-7" class="student-info">
+            <h2>座號 7 - 郭恩亮</h2>
+            <p>製作者的敘述: 他跟我們班眾多女性同學感情極佳 常常寫錯自己的名字 是老師的愛徒 </p>
+            <div class="feedback-box">
+                <h3>你想對他說的話：</h3>
+                <textarea id="feedback-7" rows="4" cols="50" placeholder="請留下你想對郭恩亮說的話..."></textarea><br>
+                <button onclick="submitFeedback(7)">提交</button>
+            </div>
+            <div class="feedback-list" id="feedback-list-7"></div>
+            <button onclick="viewFeedback(7)">查看別人對郭恩亮的意見</button>
+        </div>
+
+        <div id="student-8" class="student-info">
+            <h2>座號 8 - 黃宸宥</h2>
+            <p>製作者的敘述:ごいうしとづなすぜ(因為不知道寫甚麼 我才亂打的>_<)</p>
+            <div class="feedback-box">
+                <h3>你想對他的話：</h3>
+                <textarea id="feedback-8" rows="4" cols="50" placeholder="請留下你想對黃宸宥說的話..."></textarea><br>
+                <button onclick="submitFeedback(8)">提交</button>
+            </div>
+            <div class="feedback-list" id="feedback-list-8"></div>
+            <button onclick="viewFeedback(8)">查看別人對黃宸宥的意見</button>
+        </div>
+
+        <div id="student-9" class="student-info">
+            <h2>座號 9 - 鄭向邑</h2>
+            <p>目前資料空白 等我訪問吧(最快在西元20250年更新)</p>
+            <div class="feedback-box">
+                <h3>你想對他說的話：</h3>
+                <textarea id="feedback-9" rows="4" cols="50" placeholder="請留下你想對鄭向邑說的話..."></textarea><br>
+                <button onclick="submitFeedback(9)">提交</button>
+            </div>
+            <div class="feedback-list" id="feedback-list-9"></div>
+            <button onclick="viewFeedback(9)">查看別人對鄭向邑的意見</button>
+        </div>
+
+        <div id="student-10" class="student-info">
+            <h2>座號 10 - 林子益</h2>
+            <p>製作者的敘述:在六年級引發軒然大波 座右銘是"可加好友嗎 姊姊" 創下最*的紀錄 體育也很強 曾是四大天王一員 因某些原因而拆散 如今狀況不明</p>
+            <div class="feedback-box">
+                <h3>你想對他說的話：</h3>
+                <textarea id="feedback-10" rows="4" cols="50" placeholder="請留下你想對林子益說的話..."></textarea><br>
+                <button onclick="submitFeedback(10)">提交</button>
+            </div>
+            <div class="feedback-list" id="feedback-list-10"></div>
+            <button onclick="viewFeedback(10)">查看別人對林子益的意見</button>
+        </div>
+
+        <div id="student-11" class="student-info">
+            <h2>座號 11 - 沈彥均</h2>
+            <p>某些人的敘述:土撥鼠好可愛 跳舞好強 跑步跑到掉鞋子 好厲害>_< </p>
+            <div class="feedback-box">
+                <h3>你想對他說的話：</h3>
+                <textarea id="feedback-11" rows="4" cols="50" placeholder="請留下你想對土撥鼠說的話..."></textarea><br>
+                <button onclick="submitFeedback(11)">提交</button>
+            </div>
+            <div class="feedback-list" id="feedback-list-11"></div>
+            <button onclick="viewFeedback(11)">查看別人對土撥鼠的意見</button>
+        </div>
+
+        <div id="student-12" class="student-info">
+            <h2>那群女生們</h2>
+            <p>製作者不敢敘述斯米達</p>
+            <div class="feedback-box">
+                <h3>你想對他說的話：</h3>
+                <textarea id="feedback-5" rows="4" cols="50" placeholder="請留下你想對那群女生們說的話..."></textarea><br>
+                <button onclick="submitFeedback(5)">提交</button>
+            </div>
+            <div class="feedback-list" id="feedback-list-5"></div>
+            <button onclick="viewFeedback(5)">查看別人對那群女生們的意見</button>
+        </div>
+    </div>
+
+  
+
+    <script>
+        // 用來檢查代碼是否正確
+        function validatePassword() {
+            const password = document.getElementById('access-code').value;
+            if (password === "603") {
+                document.getElementById('password-section').style.display = 'none';
+                document.getElementById('page-content').style.display = 'block';
+            } else {
+                alert('代碼錯誤，請重新輸入');
+            }
+        }
+
+        // 顯示或隱藏區塊
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            section.style.display = section.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // 顯示對應座號的學生資料
+        function showStudentInfo(studentNumber) {
+            // 先隱藏所有學生資料
+            const allStudents = document.querySelectorAll('.student-info');
+            allStudents.forEach(student => student.classList.remove('active'));
+            
+            // 顯示對應學生資料
+            const studentElement = document.getElementById('student-' + studentNumber);
+            studentElement.classList.add('active');
+        }
+    </script>
+</body>
+</html>
